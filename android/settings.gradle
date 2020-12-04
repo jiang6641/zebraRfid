@@ -1,0 +1,2 @@
+rootProject.name = 'zebra_rfid'
+include ':RFIDAPI3Library'
