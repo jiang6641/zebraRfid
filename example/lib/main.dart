@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
-        title: Text('Plugin example app ${connectionStatus}'),
+        title: Text('Status  ${connectionStatus.index}'),
       ),
       body: Center(
           child: Column(

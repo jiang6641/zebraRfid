@@ -131,6 +131,7 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
 //                    exceptionIN = ex;
                 } catch (OperationFailureException e) {
                     String details = e.getStatusDescription();
+                            String a= e.getVendorMessage();
                     return details;
 //                    exception = e;
                 }
@@ -142,7 +143,7 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
                   Base.ConnectionStatus status=Base.ConnectionStatus.ConnectionRealy;
                 super.onPostExecute(error);
                 if (error != null) {
-                    emit(Base.RfidEngineEvents.Error, transitionEntity(Base.ErrorResult.error("error")));
+                    emit(Base.RfidEngineEvents.Error, transitionEntity(Base.ErrorResult.error(error)));
                     status=Base.ConnectionStatus.ConnectionError;
                 }
                 HashMap<String, Object> map =new HashMap<>();
@@ -328,6 +329,7 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
         Log.d(TAG, "RFIDReaderDisappeared " + readerDevice.getName());
 //        if (readerDevice.getName().equals(reader.getHostName()))
 //            disconnect();
+        dispose();
     }
 
     private  class AsyncDataNotify extends AsyncTask<ArrayList<HashMap<String, Object>>, Void, Void> {
