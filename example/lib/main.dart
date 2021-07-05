@@ -69,12 +69,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
         children: [
           Text('Running on: $_platformVersion\n'),
-          MaterialButton(
-            onPressed: () {
-              ZebraRfid.toast("asdfsdaf");
-            },
-            child: Text(rfidDatas.length.toString()),
-          ),
+          Text('count:${rfidDatas.length.toString()}'),
           Row(children: [
             MaterialButton(
               onPressed: () async {

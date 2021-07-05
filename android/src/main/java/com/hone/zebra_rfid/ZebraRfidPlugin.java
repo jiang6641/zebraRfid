@@ -41,10 +41,6 @@ public class ZebraRfidPlugin implements FlutterPlugin, MethodCallHandler, Stream
 
         eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "com.hone.zebraRfid/event_channel");
         eventChannel.setStreamHandler(this);
-
-
-
-
     }
 
     @Override
@@ -58,7 +54,11 @@ public class ZebraRfidPlugin implements FlutterPlugin, MethodCallHandler, Stream
                 Toast.makeText(context, txt, Toast.LENGTH_LONG).show();
                 break;
             case "connect":
+               // boolean  isBluetooth=call.argument("isBluetooth");
                 rfidHandler.connect(result);
+                break;
+            case "getReadersList":
+                rfidHandler.getReadersList();
                 break;
 
             case "disconnect":
@@ -78,8 +78,6 @@ public class ZebraRfidPlugin implements FlutterPlugin, MethodCallHandler, Stream
         channel.setMethodCallHandler(null);
         eventChannel.setStreamHandler(null);
     }
-
-
 
 
     @Override

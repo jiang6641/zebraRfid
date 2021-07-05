@@ -79,7 +79,8 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
     public void connect(final Result result) {
         Readers.attach(this);
         if (readers == null) {
-            readers = new Readers(context, ENUM_TRANSPORT.SERVICE_SERIAL);
+                readers = new Readers(context,ENUM_TRANSPORT.ALL);
+            //readers = new Readers(context, ENUM_TRANSPORT.SERVICE_SERIAL);
         }
         AutoConnectDevice(result);
     }
@@ -211,6 +212,20 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
                 e.printStackTrace();
             }
         }
+    }
+
+    ///获取读取器信息
+    public   ArrayList<ReaderDevice> getReadersList() {
+        ArrayList<ReaderDevice> readersListArray=new  ArrayList<ReaderDevice>();
+        try {
+            if(readers!=null) {
+                 readersListArray = readers.GetAvailableRFIDReaderList();
+                return readersListArray;
+            }
+        }catch (InvalidUsageException e){
+//            emit(Base.RfidEngineEvents.Error, transitionEntity(Base.ErrorResult.error(error)));
+        }
+        return  readersListArray;
     }
 
 

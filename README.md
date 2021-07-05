@@ -1,6 +1,6 @@
 # zebra_rfid
 
-zebra rfid scaning plugin  
+zebra rfid scaning plugin
 
 ## Getting Started
 
@@ -12,8 +12,3 @@ Android and/or iOS.
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-
-发布被墙 
-proxifier 终端代理
-flutter packages pub publish --server=https://pub.dartlang.org

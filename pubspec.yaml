@@ -1,12 +1,12 @@
 name: zebra_rfid
-description: Zebra RFC2000-TC20 RFID模块插件 .
-version: 0.0.3
+description: Zebra RFC2000-TC20/RFD8500 RFID模块插件 .
+version: 0.0.4
 repository: https://github.com/jiang6641/zebraRfid
 homepage:
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.20.0 <2.0.0"
+  flutter: ">=1.20.0"
 
 dependencies:
   flutter:
