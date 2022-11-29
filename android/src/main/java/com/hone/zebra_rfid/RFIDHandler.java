@@ -116,7 +116,7 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
                                     readerDevice = readersListArray.get(0);
                                     reader = readerDevice.getRFIDReader();
                                 } else {
-                                    return "没有检查到可连接设备";
+                                    return "No connectable device detected";
                                 }
                             }
 

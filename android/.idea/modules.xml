@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zebra_rfid.iml" filepath="$PROJECT_DIR$/.idea/modules/zebra_rfid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RFIDAPI3Library/zebra_rfid.RFIDAPI3Library.iml" filepath="$PROJECT_DIR$/.idea/modules/RFIDAPI3Library/zebra_rfid.RFIDAPI3Library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zebra_rfid.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/zebra_rfid.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zebra_rfid.main.iml" filepath="$PROJECT_DIR$/.idea/modules/zebra_rfid.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zebra_rfid.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/zebra_rfid.unitTest.iml" />
+    </modules>
+  </component>
+</project>
