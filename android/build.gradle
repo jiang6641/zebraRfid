@@ -22,6 +22,10 @@ rootProject.allprojects {
     }
 }
 
+configurations.maybeCreate("default")
+artifacts.add("default", file('RFIDAPI3Library.aar'))
+
+
 apply plugin: 'com.android.library'
 
 android {

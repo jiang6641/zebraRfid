@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zebra_rfid/base.dart';
 import 'package:zebra_rfid/zebra_rfid.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String? _platformVersion = 'Unknown';
 
   @override
   void initState() {
@@ -23,13 +23,14 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  Map<String, RfidData> rfidDatas = {};
+  Map<String?, RfidData> rfidDatas = {};
   ReaderConnectionStatus connectionStatus = ReaderConnectionStatus.UnConnection;
   addDatas(List<RfidData> datas) async {
     for (var item in datas) {
       var data = rfidDatas[item.tagID];
       if (data != null) {
-        data.count++;
+        if (data.count == null) data.count = 0;
+        data.count = data.count! + 1;
         data.peakRSSI = item.peakRSSI;
         data.relativeDistance = item.relativeDistance;
       } else
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
+    String? platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await ZebraRfid.platformVersion;
@@ -78,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                     addDatas(datas);
                   },
                   errorCallback: (err) {
-                    ZebraRfid.toast(err.errorMessage);
+                    ZebraRfid.toast(err.errorMessage!);
                   },
                   connectionStatusCallback: (status) {
                     setState(() {
@@ -110,7 +111,7 @@ class _MyAppState extends State<MyApp> {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 var key = rfidDatas.keys.toList()[index];
-                return ListTile(title: Text(rfidDatas[key].tagID));
+                return ListTile(title: Text(rfidDatas[key]!.tagID!));
               },
               itemCount: rfidDatas.length,
             ),
