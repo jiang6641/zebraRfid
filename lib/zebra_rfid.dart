@@ -8,24 +8,24 @@ class ZebraRfid {
       const MethodChannel('com.hone.zebraRfid/plugin');
   static const EventChannel _eventChannel =
       const EventChannel('com.hone.zebraRfid/event_channel');
-  static ZebraEngineEventHandler _handler;
+  static ZebraEngineEventHandler? _handler;
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
+  static Future<String?> get platformVersion async {
+    final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  static Future<String> toast(String text) async {
+  static Future<String?> toast(String text) async {
     return _channel.invokeMethod('toast', {"text": text});
   }
 
   ///
-  static Future<String> onRead() async {
+  static Future<String?> onRead() async {
     return _channel.invokeMethod('startRead');
   }
 
   ///写
-  static Future<String> write() async {
+  static Future<String?> write() async {
     return _channel.invokeMethod('write');
   }
 
@@ -41,7 +41,7 @@ class ZebraRfid {
   }
 
   ///Disconnect the device
-  static Future<String> disconnect() async {
+  static Future<String?> disconnect() async {
     return _channel.invokeMethod('disconnect');
   }
 
@@ -54,12 +54,12 @@ class ZebraRfid {
     _handler = handler;
   }
 
-  static StreamSubscription<dynamic> _sink;
+  static StreamSubscription<dynamic>? _sink;
   static Future<void> _addEventChannelHandler() async {
     if (_sink == null) {
       _sink = _eventChannel.receiveBroadcastStream().listen((event) {
         final eventMap = Map<String, dynamic>.from(event);
-        final eventName = eventMap['eventName'] as String;
+        final eventName = eventMap['eventName'] as String?;
         // final data = List<dynamic>.from(eventMap['data']);
         _handler?.process(eventName, eventMap);
       });
@@ -67,7 +67,7 @@ class ZebraRfid {
   }
 
   ///Connect device
-  static Future<String> dispose() async {
+  static Future<String?> dispose() async {
     _sink = null;
     return _channel.invokeMethod('dispose');
   }
