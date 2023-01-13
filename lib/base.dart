@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'base.g.dart';
 
 typedef ErrorCallback = void Function(ErrorResult err);
@@ -11,13 +12,13 @@ class ZebraEngineEventHandler {
       this.errorCallback,
       this.connectionStatusCallback});
 
-  ///读取rfid标签回调
+  ///Read rfid tag callback
   ReadRfidCallback readRfidCallback;
 
-  ///连接状态
+  ///Connection Status
   ConnectionStatusCallback connectionStatusCallback;
 
-  ///异常错误回调
+  ///Exception error callback
   ErrorCallback errorCallback;
 
   // ignore: public_member_api_docs
@@ -45,45 +46,45 @@ class ZebraEngineEventHandler {
 }
 
 enum ReaderConnectionStatus {
-  ///未连接
+  ///not connected
   UnConnection,
 
-  ///连接完成
-  ConnectionRealy,
+  ///The connection is complete
+  ConnectionReally,
 
-  ///连接出错
+  /// Connection error
   ConnectionError,
 }
 
-///标签数据
+/// label data
 @JsonSerializable()
 class RfidData {
   RfidData();
 
-  ///标签id
+  ///label id
   String tagID;
 
   int antennaID;
-  //信号峰值
+  //signal peak
   int peakRSSI;
 
   // public String tagDetails;
-  ///操作状态
+  ///Operation status
   // ACCESS_OPERATION_STATUS opStatus;
 
-  ///相对距离
+  ///relative distance
   int relativeDistance;
 
-  ///识别次数
+  ///Recognition times
   int count = 0;
 
-  ///存储数据
+  ///Storing data
   String memoryBankData;
 
-  ///永久锁定数据
+  ///Permanently lock the data
   String lockData;
 
-  ///分配大小
+  ///allocation size
   int allocatedSize;
 
   factory RfidData.fromJson(Map<dynamic, dynamic> json) =>

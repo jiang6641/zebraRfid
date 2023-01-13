@@ -40,7 +40,7 @@ class ZebraRfid {
     }
   }
 
-  ///断开设备
+  ///Disconnect the device
   static Future<String> disconnect() async {
     return _channel.invokeMethod('disconnect');
   }
@@ -66,7 +66,7 @@ class ZebraRfid {
     }
   }
 
-  ///连接设备
+  ///Connect device
   static Future<String> dispose() async {
     _sink = null;
     return _channel.invokeMethod('dispose');
