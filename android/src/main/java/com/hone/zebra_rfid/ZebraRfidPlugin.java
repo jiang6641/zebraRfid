@@ -66,7 +66,11 @@ public class ZebraRfidPlugin implements FlutterPlugin, MethodCallHandler, Stream
                 result.success(null);
                 break;
             case "write":
-
+                ///[TODO] implement write
+                break;
+            case  "setPower":
+                int powerIndex = call.arument("powerIndex");
+                rfidHandler.setMaxPower(powerIndex);
                 break;
             default:
                 result.notImplemented();

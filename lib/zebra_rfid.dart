@@ -66,9 +66,17 @@ class ZebraRfid {
     }
   }
 
-  ///Connect device
+  ///DisConnect device
   static Future<String?> dispose() async {
     _sink = null;
     return _channel.invokeMethod('dispose');
+  }
+
+  /// set power
+  /// [power] 0-270
+  static Future<void> setPower(int power) async {
+    // return error if power is not in range
+    assert(power >= 0 && power <= 270);
+    return _channel.invokeMethod('setPower', {"powerIndex": power});
   }
 }

@@ -1,6 +1,6 @@
 name: zebra_rfid
 description: Zebra RFC2000-TC20/RFD8500 RFID模块插件 .
-version: 0.2.0
+version: 0.3.1
 repository: https://github.com/jiang6641/zebraRfid
 homepage:
 
