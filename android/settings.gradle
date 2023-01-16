@@ -1,2 +1,3 @@
 rootProject.name = 'zebra_rfid'
 include ':RFIDAPI3Library'
+project(":RFIDAPI3Library").projectDir = file("./RFIDAPI3Library")
