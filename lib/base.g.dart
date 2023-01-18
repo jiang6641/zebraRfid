@@ -8,14 +8,14 @@ part of 'base.dart';
 
 RfidData _$RfidDataFromJson(Map<String, dynamic> json) {
   return RfidData()
-    ..tagID = json['tagID'] as String
-    ..antennaID = json['antennaID'] as int
-    ..peakRSSI = json['peakRSSI'] as int
-    ..relativeDistance = json['relativeDistance'] as int
-    ..count = json['count'] as int
-    ..memoryBankData = json['memoryBankData'] as String
-    ..lockData = json['lockData'] as String
-    ..allocatedSize = json['allocatedSize'] as int;
+    ..tagID = json['tagID'] as String?
+    ..antennaID = json['antennaID'] as int?
+    ..peakRSSI = json['peakRSSI'] as int?
+    ..relativeDistance = json['relativeDistance'] as int?
+    ..count = json['count'] as int?
+    ..memoryBankData = json['memoryBankData'] as String?
+    ..lockData = json['lockData'] as String?
+    ..allocatedSize = json['allocatedSize'] as int?;
 }
 
 Map<String, dynamic> _$RfidDataToJson(RfidData instance) => <String, dynamic>{
@@ -31,8 +31,8 @@ Map<String, dynamic> _$RfidDataToJson(RfidData instance) => <String, dynamic>{
 
 ErrorResult _$ErrorResultFromJson(Map<String, dynamic> json) {
   return ErrorResult()
-    ..code = json['code'] as int
-    ..errorMessage = json['errorMessage'] as String;
+    ..code = json['code'] as int?
+    ..errorMessage = json['errorMessage'] as String?;
 }
 
 Map<String, dynamic> _$ErrorResultToJson(ErrorResult instance) =>

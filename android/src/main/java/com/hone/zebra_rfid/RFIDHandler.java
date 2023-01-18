@@ -48,7 +48,7 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
     //    private static ArrayList<ReaderDevice> availableRFIDReaderList;
     private static ReaderDevice readerDevice;
     private static RFIDReader reader;
-    private int MAX_POWER = 270;
+    private int maxPower = 270;
     private IEventHandler eventHandler = new IEventHandler();
     private Function<String, Map<String, Object>> _emit;
     private EventChannel.EventSink sink = null;
@@ -116,7 +116,7 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
                                     readerDevice = readersListArray.get(0);
                                     reader = readerDevice.getRFIDReader();
                                 } else {
-                                    return "没有检查到可连接设备";
+                                    return "No connectable device detected";
                                 }
                             }
 
@@ -192,10 +192,10 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
                 reader.Config.setStartTrigger(triggerInfo.StartTrigger);
                 reader.Config.setStopTrigger(triggerInfo.StopTrigger);
                 // power levels are index based so maximum power supported get the last one
-                MAX_POWER = reader.ReaderCapabilities.getTransmitPowerLevelValues().length - 1;
+                maxPower = reader.ReaderCapabilities.getTransmitPowerLevelValues().length - 1;
                 // set antenna configurations
                 Antennas.AntennaRfConfig config = reader.Config.Antennas.getAntennaRfConfig(1);
-                config.setTransmitPowerIndex(MAX_POWER);
+                config.setTransmitPowerIndex(maxPower);
                 config.setrfModeTableIndex(0);
                 config.setTari(0);
                 reader.Config.Antennas.setAntennaRfConfig(1, config);
@@ -213,6 +213,28 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
             }
         }
     }
+
+
+
+    public void setMaxPower(int newMaxPower){
+        maxPower = newMaxPower;
+        try {
+            Antennas.AntennaRfConfig config = reader.Config.Antennas.getAntennaRfConfig(1);
+            config.setTransmitPowerIndex(maxPower);
+            reader.Config.Antennas.setAntennaRfConfig(1, config);
+        }catch (InvalidUsageException | OperationFailureException e){
+            e.printStackTrace();
+        }
+
+    }
+    public  int getMaxPower(){
+        return maxPower;
+    }
+
+    public boolean isConnected(){
+        return isReaderConnected();
+    }
+
 
     ///获取读取器信息
     public   ArrayList<ReaderDevice> getReadersList() {

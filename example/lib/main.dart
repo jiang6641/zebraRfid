@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zebra_rfid/base.dart';
 import 'package:zebra_rfid/zebra_rfid.dart';
@@ -15,7 +15,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String? _platformVersion = 'Unknown';
+  int power = 200;
+
+  double get powerValue => power / 1000;
+
+  final powerMin = 0;
+  final powerMax = 270;
+  set powerValue(double value) {
+    power = (value * 1000).toInt();
+    print('powerValue $power');
+    ZebraRfid.setPower(power);
+  }
 
   @override
   void initState() {
@@ -23,13 +34,14 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  Map<String, RfidData> rfidDatas = {};
+  Map<String?, RfidData> rfidDatas = {};
   ReaderConnectionStatus connectionStatus = ReaderConnectionStatus.UnConnection;
   addDatas(List<RfidData> datas) async {
     for (var item in datas) {
       var data = rfidDatas[item.tagID];
       if (data != null) {
-        data.count++;
+        if (data.count == null) data.count = 0;
+        data.count = data.count! + 1;
         data.peakRSSI = item.peakRSSI;
         data.relativeDistance = item.relativeDistance;
       } else
@@ -40,7 +52,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
+    String? platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await ZebraRfid.platformVersion;
@@ -78,7 +90,7 @@ class _MyAppState extends State<MyApp> {
                     addDatas(datas);
                   },
                   errorCallback: (err) {
-                    ZebraRfid.toast(err.errorMessage);
+                    ZebraRfid.toast(err.errorMessage!);
                   },
                   connectionStatusCallback: (status) {
                     setState(() {
@@ -105,12 +117,21 @@ class _MyAppState extends State<MyApp> {
               child: Text("stop"),
             ),
           ]),
+          Slider(
+              max: powerMax / 1000,
+              min: powerMin / 1000,
+              label: power.toString(),
+              value: powerValue,
+              onChanged: (value) {
+                powerValue = value;
+                setState(() {});
+              }),
           Expanded(
               child: Scrollbar(
             child: ListView.builder(
               itemBuilder: (context, index) {
                 var key = rfidDatas.keys.toList()[index];
-                return ListTile(title: Text(rfidDatas[key].tagID));
+                return ListTile(title: Text(rfidDatas[key]!.tagID!));
               },
               itemCount: rfidDatas.length,
             ),

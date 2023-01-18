@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'base.g.dart';
 
 typedef ErrorCallback = void Function(ErrorResult err);
@@ -11,17 +12,17 @@ class ZebraEngineEventHandler {
       this.errorCallback,
       this.connectionStatusCallback});
 
-  ///读取rfid标签回调
-  ReadRfidCallback readRfidCallback;
+  ///Read rfid tag callback
+  ReadRfidCallback? readRfidCallback;
 
-  ///连接状态
-  ConnectionStatusCallback connectionStatusCallback;
+  ///Connection Status
+  ConnectionStatusCallback? connectionStatusCallback;
 
-  ///异常错误回调
-  ErrorCallback errorCallback;
+  ///Exception error callback
+  ErrorCallback? errorCallback;
 
   // ignore: public_member_api_docs
-  void process(String eventName, Map<String, dynamic> map) {
+  void process(String? eventName, Map<String, dynamic> map) {
     switch (eventName) {
       case 'ReadRfid':
         List<dynamic> rfidDatas = map["datas"];
@@ -33,61 +34,61 @@ class ZebraEngineEventHandler {
         break;
       case 'Error':
         var ss = ErrorResult.fromJson(map);
-        errorCallback.call(ss);
+        errorCallback!.call(ss);
         break;
       case 'ConnectionStatus':
         ReaderConnectionStatus status =
             ReaderConnectionStatus.values[map["status"] as int];
-        connectionStatusCallback.call(status);
+        connectionStatusCallback!.call(status);
         break;
     }
   }
 }
 
 enum ReaderConnectionStatus {
-  ///未连接
+  ///not connected
   UnConnection,
 
-  ///连接完成
-  ConnectionRealy,
+  ///The connection is complete
+  ConnectionReally,
 
-  ///连接出错
+  /// Connection error
   ConnectionError,
 }
 
-///标签数据
+/// label data
 @JsonSerializable()
 class RfidData {
   RfidData();
 
-  ///标签id
-  String tagID;
+  ///label id
+  String? tagID;
 
-  int antennaID;
-  //信号峰值
-  int peakRSSI;
+  int? antennaID;
+  //signal peak
+  int? peakRSSI;
 
   // public String tagDetails;
-  ///操作状态
+  ///Operation status
   // ACCESS_OPERATION_STATUS opStatus;
 
-  ///相对距离
-  int relativeDistance;
+  ///relative distance
+  int? relativeDistance;
 
-  ///识别次数
-  int count = 0;
+  ///Recognition times
+  int? count = 0;
 
-  ///存储数据
-  String memoryBankData;
+  ///Storing data
+  String? memoryBankData;
 
-  ///永久锁定数据
-  String lockData;
+  ///Permanently lock the data
+  String? lockData;
 
-  ///分配大小
-  int allocatedSize;
+  ///allocation size
+  int? allocatedSize;
 
   factory RfidData.fromJson(Map<dynamic, dynamic> json) =>
-      _$RfidDataFromJson(json);
+      _$RfidDataFromJson(json as Map<String, dynamic>);
   Map<String, dynamic> toJson() => _$RfidDataToJson(this);
 }
 
@@ -95,8 +96,8 @@ class RfidData {
 class ErrorResult {
   ErrorResult();
 
-  int code = -1;
-  String errorMessage = "";
+  int? code = -1;
+  String? errorMessage = "";
 
   factory ErrorResult.fromJson(Map<String, dynamic> json) =>
       _$ErrorResultFromJson(json);

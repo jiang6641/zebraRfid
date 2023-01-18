@@ -8,24 +8,24 @@ class ZebraRfid {
       const MethodChannel('com.hone.zebraRfid/plugin');
   static const EventChannel _eventChannel =
       const EventChannel('com.hone.zebraRfid/event_channel');
-  static ZebraEngineEventHandler _handler;
+  static ZebraEngineEventHandler? _handler;
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
+  static Future<String?> get platformVersion async {
+    final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  static Future<String> toast(String text) async {
+  static Future<String?> toast(String text) async {
     return _channel.invokeMethod('toast', {"text": text});
   }
 
   ///
-  static Future<String> onRead() async {
+  static Future<String?> onRead() async {
     return _channel.invokeMethod('startRead');
   }
 
   ///写
-  static Future<String> write() async {
+  static Future<String?> write() async {
     return _channel.invokeMethod('write');
   }
 
@@ -40,8 +40,8 @@ class ZebraRfid {
     }
   }
 
-  ///断开设备
-  static Future<String> disconnect() async {
+  ///Disconnect the device
+  static Future<String?> disconnect() async {
     return _channel.invokeMethod('disconnect');
   }
 
@@ -54,21 +54,40 @@ class ZebraRfid {
     _handler = handler;
   }
 
-  static StreamSubscription<dynamic> _sink;
+  static StreamSubscription<dynamic>? _sink;
   static Future<void> _addEventChannelHandler() async {
     if (_sink == null) {
       _sink = _eventChannel.receiveBroadcastStream().listen((event) {
         final eventMap = Map<String, dynamic>.from(event);
-        final eventName = eventMap['eventName'] as String;
+        final eventName = eventMap['eventName'] as String?;
         // final data = List<dynamic>.from(eventMap['data']);
         _handler?.process(eventName, eventMap);
       });
     }
   }
 
-  ///连接设备
-  static Future<String> dispose() async {
+  ///DisConnect device
+  static Future<String?> dispose() async {
     _sink = null;
     return _channel.invokeMethod('dispose');
+  }
+
+  static Future<bool> get isConnected async {
+    return await _channel.invokeMethod('isConnected');
+  }
+
+  /// set power
+  /// [power] 0-270
+  static Future<void> setPower(int power) async {
+    // return error if power is not in range
+    assert(power >= 0 && power <= 270);
+    // if not connected show error
+    assert(await isConnected);
+    return _channel.invokeMethod('setPower', {"powerIndex": power});
+  }
+
+  static Future<int> getPower() async {
+    final power = await _channel.invokeMethod('getPower');
+    return power;
   }
 }

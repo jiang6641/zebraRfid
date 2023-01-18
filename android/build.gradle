@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:7.1.2'
     }
 }
 
@@ -16,11 +16,15 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        // flatDir {                                                                                                       
-        //      dirs "RFIDAPI3Library"                                                                                  
-        //  }     
+        flatDir {                                                                                                       
+             dirs "RFIDAPI3Library"                                                                                  
+         }     
     }
 }
+
+configurations.maybeCreate("default")
+artifacts.add("default", file('RFIDAPI3Library.aar'))
+
 
 apply plugin: 'com.android.library'
 
@@ -36,7 +40,9 @@ android {
 }
 
 dependencies {
-    implementation files('RFIDAPI3Library/RFIDAPI3Library.aar')
+    // implementation files('RFIDAPI3Library/RFIDAPI3Library.aar')
+    implementation project(":RFIDAPI3Library")
+
     //implementation project(':RFIDAPI3Library')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
