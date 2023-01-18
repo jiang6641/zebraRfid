@@ -72,11 +72,22 @@ class ZebraRfid {
     return _channel.invokeMethod('dispose');
   }
 
+  static Future<bool> get isConnected async {
+    return await _channel.invokeMethod('isConnected');
+  }
+
   /// set power
   /// [power] 0-270
   static Future<void> setPower(int power) async {
     // return error if power is not in range
     assert(power >= 0 && power <= 270);
+    // if not connected show error
+    assert(await isConnected);
     return _channel.invokeMethod('setPower', {"powerIndex": power});
+  }
+
+  static Future<int> getPower() async {
+    final power = await _channel.invokeMethod('getPower');
+    return power;
   }
 }

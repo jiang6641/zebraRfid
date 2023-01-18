@@ -218,8 +218,24 @@ public class RFIDHandler implements Readers.RFIDReaderEventHandler {
 
     public void setMaxPower(int newMaxPower){
         maxPower = newMaxPower;
-        config.setTransmitPowerIndex(maxPower);
+        try {
+            Antennas.AntennaRfConfig config = reader.Config.Antennas.getAntennaRfConfig(1);
+            config.setTransmitPowerIndex(maxPower);
+            reader.Config.Antennas.setAntennaRfConfig(1, config);
+        }catch (InvalidUsageException | OperationFailureException e){
+            e.printStackTrace();
+        }
+
     }
+    public  int getMaxPower(){
+        return maxPower;
+    }
+
+    public boolean isConnected(){
+        return isReaderConnected();
+    }
+
+
     ///获取读取器信息
     public   ArrayList<ReaderDevice> getReadersList() {
         ArrayList<ReaderDevice> readersListArray=new  ArrayList<ReaderDevice>();

@@ -16,6 +16,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String? _platformVersion = 'Unknown';
+  int power = 200;
+
+  double get powerValue => power / 1000;
+
+  final powerMin = 0;
+  final powerMax = 270;
+  set powerValue(double value) {
+    power = (value * 1000).toInt();
+    print('powerValue $power');
+    ZebraRfid.setPower(power);
+  }
 
   @override
   void initState() {
@@ -106,6 +117,15 @@ class _MyAppState extends State<MyApp> {
               child: Text("stop"),
             ),
           ]),
+          Slider(
+              max: powerMax / 1000,
+              min: powerMin / 1000,
+              label: power.toString(),
+              value: powerValue,
+              onChanged: (value) {
+                powerValue = value;
+                setState(() {});
+              }),
           Expanded(
               child: Scrollbar(
             child: ListView.builder(
